@@ -17,9 +17,9 @@ public class SetWristCommand extends Command {
     
     @Override
     public void initialize() {
-        m_wrist.setPosition(point);
+        m_wrist.setPosition(2);
 
-        done = true; //hiiiiiiiiiiiii
+        done = true; 
     }
 
     @Override

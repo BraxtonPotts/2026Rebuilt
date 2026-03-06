@@ -22,15 +22,18 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.RevCommand;
+import frc.robot.commands.SetWristCommand;
 import frc.robot.commands.ShootCommand;
-import frc.robot.commands.lime.ShooterAimCommand;
+import frc.robot.commands.lime.AlignToTag;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.WristSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 
 public class RobotContainer {
 
-    private final SendableChooser<Command> autoChooser;
+    //private final SendableChooser<Command> autoChooser;
 
     private static final double MaxSpeed = 0.5 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private static final double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -50,29 +53,36 @@ public class RobotContainer {
     private final static CommandXboxController koperatorController = new CommandXboxController(Constants.OperatorConstants.kOperatorControllerPort);
         // establish subsystem auto after robot is built (likely 5 weeks from 2/19/2026)
     
-        public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-        public final ShooterSubsystem shootersubsystem = new ShooterSubsystem();
+    public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    public final LimelightSubsystem limelight = new LimelightSubsystem(drivetrain);
+    public final ShooterSubsystem shootersubsystem = new ShooterSubsystem();
+    public final WristSubsystem wrist = new WristSubsystem();
     
         public RobotContainer() {
             // Build an auto chooser. This will use Commands.none() as the default option.
-            autoChooser = AutoBuilder.buildAutoChooser();
+            //autoChooser = AutoBuilder.buildAutoChooser();
 
             // Another option that allows you to specify the default auto by its name
             // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
 
-            SmartDashboard.putData("Auto Chooser", autoChooser);
+            //SmartDashboard.putData("Auto Chooser", autoChooser);
             configureBindings();
         }
         
         public static double getRightTriggerValue(){
             return koperatorController.getRightTriggerAxis();
         }
+        public static double getLeftTriggerValue(){
+            return koperatorController.getLeftTriggerAxis();
+        }
 
     private void configureBindings() {
 
         koperatorController.a().onTrue(new ShootCommand(shootersubsystem, ShooterConstants.shootTime));
         koperatorController.b().onTrue(new RevCommand(shootersubsystem, ShooterConstants.revTime));
-        koperatorController.x().whileTrue(new ShooterAimCommand(drivetrain));
+        //koperatorController.y().onTrue(new SetWristCommand(wrist, -2));
+        koperatorController.x().whileTrue(new AlignToTag(drivetrain, limelight, () -> -kdriverController.getLeftY(),  // forward/back
+                () -> -kdriverController.getLeftX()));
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
@@ -110,6 +120,7 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
+    return null;
+        //return autoChooser.getSelected();
   }
 }
