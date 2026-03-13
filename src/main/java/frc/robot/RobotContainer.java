@@ -11,29 +11,24 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.RevCommand;
-import frc.robot.commands.SetWristCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.lime.AlignToTag;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 
 public class RobotContainer {
 
-    //private final SendableChooser<Command> autoChooser;
+    private final SendableChooser<Command> autoChooser;
 
     private static final double MaxSpeed = 0.5 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private static final double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -57,14 +52,12 @@ public class RobotContainer {
     public final LimelightSubsystem limelight = new LimelightSubsystem(drivetrain);
     public final ShooterSubsystem shootersubsystem = new ShooterSubsystem();
     public final WristSubsystem wrist = new WristSubsystem();
+    public final IntakeSubsystem intake = new IntakeSubsystem();
     
         public RobotContainer() {
-            // Build an auto chooser. This will use Commands.none() as the default option.
-            //autoChooser = AutoBuilder.buildAutoChooser();
-
-            // Another option that allows you to specify the default auto by its name
-            // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
-
+            autoChooser = AutoBuilder.buildAutoChooser();
+            //autoChooser = new SendableChooser<Command>();
+            //autoChooser.addOption("Red Right Multi", new RedRightMultiAuto(drivetrain, shootersubsystem, wrist, null));
             //SmartDashboard.putData("Auto Chooser", autoChooser);
             configureBindings();
         }
@@ -75,13 +68,16 @@ public class RobotContainer {
         public static double getLeftTriggerValue(){
             return koperatorController.getLeftTriggerAxis();
         }
+        public static double getABoolean(){
+            return koperatorController.a().getAsBoolean() ? 1 : 0;
+        }
+        
 
     private void configureBindings() {
 
-        koperatorController.a().onTrue(new ShootCommand(shootersubsystem, ShooterConstants.shootTime));
-        koperatorController.b().onTrue(new RevCommand(shootersubsystem, ShooterConstants.revTime));
-        //koperatorController.y().onTrue(new SetWristCommand(wrist, -2));
-        koperatorController.x().whileTrue(new AlignToTag(drivetrain, limelight, () -> -kdriverController.getLeftY(),  // forward/back
+        //koperatorController.a().whileTrue(new ShootCommand(shootersubsystem));
+        //koperatorController.y().onTrue(new SetWristCommand(wrist, -5));
+        kdriverController.x().whileTrue(new AlignToTag(drivetrain, limelight, () -> -kdriverController.getLeftY(),  // forward/back
                 () -> -kdriverController.getLeftX()));
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.

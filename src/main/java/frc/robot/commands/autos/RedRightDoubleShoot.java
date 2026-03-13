@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.autos;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
@@ -11,17 +11,17 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 
-public class RedRightMultiAuto extends SequentialCommandGroup{
-    public RedRightMultiAuto(CommandSwerveDrivetrain swerve, ShooterSubsystem shooter, WristSubsystem wrist, IntakeSubsystem intake){
+public class RedRightDoubleShoot extends SequentialCommandGroup{
+    public RedRightDoubleShoot(CommandSwerveDrivetrain swerve, ShooterSubsystem shooter, WristSubsystem wrist, IntakeSubsystem intake){
     addCommands(
         new PathPlannerAuto("RedRightMultiShoot"),
+
         Commands.runOnce(() -> wrist.setPosition(0.5), wrist),
         
-
         Commands.runOnce(() -> shooter.speedUp(ShooterConstants.autoShooterSpeed, 1.37), shooter),
         new WaitCommand(1.37),
 
-        Commands.runOnce(() -> shooter.fire(ShooterConstants.autoShooterSpeed, 2), shooter),
+        Commands.runOnce(() -> shooter.timedFire(ShooterConstants.autoShooterSpeed, 2), shooter),
         new WaitCommand(4.5),
 
         Commands.run(() -> intake.timedRun(1.5), intake),
@@ -30,7 +30,7 @@ public class RedRightMultiAuto extends SequentialCommandGroup{
         Commands.runOnce(() -> shooter.speedUp(ShooterConstants.autoShooterSpeed, 1), shooter),
         new WaitCommand(1),
 
-        Commands.runOnce(() -> shooter.fire(ShooterConstants.autoShooterSpeed, 2), shooter)
+        Commands.runOnce(() -> shooter.timedFire(ShooterConstants.autoShooterSpeed, 2), shooter)
 
         );  
     }

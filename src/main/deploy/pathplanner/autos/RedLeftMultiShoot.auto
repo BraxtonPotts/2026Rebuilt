@@ -7,25 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "BlueRightShoot1"
+            "pathName": "RedLeftShoot1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "BlueRightGetBall"
+            "pathName": "RedLeftGetBall"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "BlueRightShoot2"
+            "pathName": "RedLeftShoot2"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Blue",
+  "folder": "Red",
   "choreoAuto": false
 }

@@ -8,20 +8,22 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShootCommand extends Command {
   
   private final ShooterSubsystem m_shootersubsystem;
-  private final double shootTime;
 
-  public ShootCommand(ShooterSubsystem subsystem, double shoottime) {
+  public ShootCommand(ShooterSubsystem subsystem) {
     m_shootersubsystem = subsystem;
-    shootTime = shoottime;
     addRequirements(subsystem);
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_shootersubsystem.speedUp(ShooterConstants.revSpeed, ShooterConstants.revTime);
+  }
+  
   @Override
   public void execute(){
-    m_shootersubsystem.fire(ShooterConstants.shootSpeed, shootTime);
+    m_shootersubsystem.fire(ShooterConstants.shootSpeed);
   }
+  
   @Override
   public boolean isFinished() {
     m_shootersubsystem.stop();

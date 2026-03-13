@@ -11,21 +11,24 @@ import frc.robot.RobotContainer;
 
 public class IntakeSubsystem extends SubsystemBase{
     private SparkFlex intake;
-    double startTime;
+    private double startTime;
+
+    private double intakeSpeed;
 
     public IntakeSubsystem() {
         intake = new SparkFlex(IntakeConstants.intakeID, MotorType.kBrushless);
+        intakeSpeed = IntakeConstants.intakeSpeed;
     }
 
     public void run (){
-        intake.set(0.8);
+        intake.set(intakeSpeed);
     }
 
     public void timedRun (double runTime){
         startTime = Timer.getFPGATimestamp();
         
         while(Timer.getFPGATimestamp() - startTime < runTime){
-            intake.set(0.8);
+            intake.set(intakeSpeed);
         }
     }
 
@@ -35,10 +38,10 @@ public class IntakeSubsystem extends SubsystemBase{
 
     @Override
     public void periodic(){
+        
         if(RobotContainer.getRightTriggerValue() > 0.1){
             run();
         }
-        
         else{
             stop();
         }

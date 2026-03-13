@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.965366666666666,
-        "y": 4.730366666666666
+        "x": 9.025833333333333,
+        "y": 3.3194777777777777
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.690933333333332,
-        "y": 5.959855555555555
+        "x": 9.539766666666667,
+        "y": 1.7270555555555553
       },
       "isLocked": false,
-      "linkedName": "EndRedRightGetBall"
+      "linkedName": "RedLeftGetBall"
     },
     {
       "anchor": {
         "x": 13.087177777777777,
-        "y": 5.698
+        "y": 2.3019999999999996
       },
       "prevControl": {
         "x": 11.887922222222219,
-        "y": 5.748388888888889
+        "y": 2.352388888888888
       },
       "nextControl": {
         "x": 13.339704350167555,
-        "y": 5.687389639815556
+        "y": 2.291389639815555
       },
       "isLocked": false,
       "linkedName": null
@@ -33,15 +33,15 @@
     {
       "anchor": {
         "x": 14.5,
-        "y": 5.698
+        "y": 2.3019999999999996
       },
       "prevControl": {
         "x": 14.250303814011176,
-        "y": 5.685678689086205
+        "y": 2.2896786890862044
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RedRightFire"
+      "linkedName": "RedLeftFire"
     }
   ],
   "rotationTargets": [
@@ -67,13 +67,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -147.3154137294033
+    "rotation": 146.23268937965767
   },
   "reversed": false,
-  "folder": "RedRightShoot",
+  "folder": "RedLeftShoot",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

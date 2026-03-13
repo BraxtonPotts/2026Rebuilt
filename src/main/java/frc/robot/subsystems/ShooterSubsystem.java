@@ -6,6 +6,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.RobotContainer;
 
 public class ShooterSubsystem extends SubsystemBase{
     
@@ -14,6 +15,7 @@ public class ShooterSubsystem extends SubsystemBase{
     SparkFlex feed;
 
     double startTime;
+    boolean hasStarted;
     
 
     public ShooterSubsystem(){
@@ -34,7 +36,7 @@ public class ShooterSubsystem extends SubsystemBase{
         }
     }
 
-    public void fire(double fireSpeed, double shootTime){
+    public void timedFire(double fireSpeed, double shootTime){
         startTime = Timer.getFPGATimestamp();
         while(Timer.getFPGATimestamp() - startTime < shootTime){
         feed.set(-0.3);
@@ -43,11 +45,35 @@ public class ShooterSubsystem extends SubsystemBase{
         rightShoot.set(fireSpeed);
         }
     }
+    public void fire(double fireSpeed){
+        feed.set(-0.3);
+
+        leftShoot.set(-fireSpeed);
+        rightShoot.set(fireSpeed);
+    }
     
     public void stop(){
         feed.set(0);
 
         leftShoot.set(0);
         rightShoot.set(0);
+    }
+
+    @Override
+    public void periodic(){
+
+        if (RobotContainer.getABoolean() == 1) {
+            if (hasStarted == false) {
+                speedUp(ShooterConstants.revSpeed, ShooterConstants.revTime);
+                hasStarted = true;
+            }
+            else{
+            fire(ShooterConstants.shootSpeed);
+            }
+        }
+        else{
+            stop();
+            hasStarted = false;
+        }
     }
 }

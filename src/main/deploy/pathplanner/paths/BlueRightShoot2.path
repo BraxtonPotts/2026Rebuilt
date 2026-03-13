@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.736,
-        "y": 3.777
+        "x": 7.6350999999999996,
+        "y": 3.2388555555555545
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.640028125251021,
-        "y": 3.622461211628536
+        "x": 6.539128125251021,
+        "y": 3.0843167671840903
       },
       "isLocked": false,
       "linkedName": "EndBlueGetBallRight"
