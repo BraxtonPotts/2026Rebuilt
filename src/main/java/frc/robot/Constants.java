@@ -35,5 +35,6 @@ public final class Constants {
   public static class WristConstants{
     //WRIST
     public static int wristID = 18;
+    public static double wristOutPostion = -2.06;
   }
 }

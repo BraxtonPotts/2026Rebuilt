@@ -5,9 +5,21 @@
     "data": {
       "commands": [
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "BlueLeftShoot1"
+            "pathName": "RedMidToDepot1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RedMidFromDepot1"
           }
         },
         {
@@ -19,25 +31,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "BlueLeftGetBall"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0
+            "pathName": "RedMidToDepot2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "BlueLeftShoot2"
+            "pathName": "RedMidFromDepot2"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Blue",
+  "folder": "Red",
   "choreoAuto": false
 }

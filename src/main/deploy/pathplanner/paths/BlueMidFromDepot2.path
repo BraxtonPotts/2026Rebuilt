@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0,
-        "y": 1.0
+        "x": 0.701588888888889,
+        "y": 6.262188888888889
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.186826018147696,
-        "y": 0.7505204934279048
+        "x": 1.1031206307986925,
+        "y": 6.249271934897432
       },
-      "isLocked": true,
+      "isLocked": false,
+      "linkedName": "BlueDepot2"
+    },
+    {
+      "anchor": {
+        "x": 1.803724792408067,
+        "y": 6.262188888888889
+      },
+      "prevControl": {
+        "x": 1.4537516552278869,
+        "y": 6.59287082791205
+      },
+      "nextControl": {
+        "x": 2.335465573521187,
+        "y": 5.759758691037308
+      },
+      "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.304,
-        "y": 2.3019999999999996
+        "x": 1.803724792408067,
+        "y": 4.061897983392646
       },
       "prevControl": {
-        "x": 2.068233810379811,
-        "y": 2.1516172581319855
+        "x": 1.7660333757702626,
+        "y": 4.539901804488868
       },
       "nextControl": null,
-      "isLocked": true,
-      "linkedName": "BlueRightFire"
+      "isLocked": false,
+      "linkedName": "BlueMiddleFire"
     }
   ],
   "rotationTargets": [],
@@ -42,10 +58,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 37.5
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "BlueRight",
+  "folder": "BlueMid",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

@@ -8,16 +8,14 @@ import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.pathplanner.lib.auto.AutoBuilder;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.ShootCommand;
+import frc.robot.commands.autos.BlueLeftDouble;
 import frc.robot.commands.lime.AlignToTag;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -52,13 +50,12 @@ public class RobotContainer {
     public final LimelightSubsystem limelight = new LimelightSubsystem(drivetrain);
     public final ShooterSubsystem shootersubsystem = new ShooterSubsystem();
     public final WristSubsystem wrist = new WristSubsystem();
-    public final IntakeSubsystem intake = new IntakeSubsystem();
+    public final IntakeSubsystem intake = new IntakeSubsystem(koperatorController::getRightTriggerAxis);
     
         public RobotContainer() {
-            autoChooser = AutoBuilder.buildAutoChooser();
-            //autoChooser = new SendableChooser<Command>();
-            //autoChooser.addOption("Red Right Multi", new RedRightMultiAuto(drivetrain, shootersubsystem, wrist, null));
-            //SmartDashboard.putData("Auto Chooser", autoChooser);
+            autoChooser = new SendableChooser<Command>();
+            autoChooser.addOption("BlueLeft", new BlueLeftDouble(drivetrain, shootersubsystem, wrist, intake));
+            SmartDashboard.putData("Auto Chooser", autoChooser);
             configureBindings();
         }
         
@@ -75,7 +72,6 @@ public class RobotContainer {
 
     private void configureBindings() {
 
-        //koperatorController.a().whileTrue(new ShootCommand(shootersubsystem));
         //koperatorController.y().onTrue(new SetWristCommand(wrist, -5));
         kdriverController.x().whileTrue(new AlignToTag(drivetrain, limelight, () -> -kdriverController.getLeftY(),  // forward/back
                 () -> -kdriverController.getLeftX()));
@@ -116,7 +112,6 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-    return null;
-        //return autoChooser.getSelected();
+    return autoChooser.getSelected();
   }
 }

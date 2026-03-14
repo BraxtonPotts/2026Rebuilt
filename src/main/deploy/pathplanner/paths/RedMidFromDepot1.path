@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 14.5,
-        "y": 1.0
+        "x": 15.838411111111114,
+        "y": 2.452788888888888
       },
       "prevControl": null,
       "nextControl": {
-        "x": 14.385446313253885,
-        "y": 1.2294584042647116
+        "x": 15.979980538471647,
+        "y": 2.1853435861933392
       },
-      "isLocked": true,
+      "isLocked": false,
+      "linkedName": "RedDepot1"
+    },
+    {
+      "anchor": {
+        "x": 15.05234444443689,
+        "y": 2.8256666666713057
+      },
+      "prevControl": {
+        "x": 14.822393394466753,
+        "y": 3.229559123197039
+      },
+      "nextControl": {
+        "x": 15.2387976896597,
+        "y": 2.4981749711560446
+      },
+      "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 14.5,
-        "y": 2.3019999999999996
+        "x": 14.669388888888891,
+        "y": 3.934222222222221
       },
       "prevControl": {
-        "x": 14.433404697234472,
-        "y": 2.0610330610860323
+        "x": 14.63768460277569,
+        "y": 3.4419325741889057
       },
       "nextControl": null,
-      "isLocked": true,
-      "linkedName": "RedLeftFire"
+      "isLocked": false,
+      "linkedName": "RedMidFire"
     }
   ],
   "rotationTargets": [],
@@ -42,10 +58,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 146.23268937965767
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "RedLeft",
+  "folder": "RedMid",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

@@ -11,8 +11,8 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 
-public class RedRightDoubleShoot extends SequentialCommandGroup{
-    public RedRightDoubleShoot(CommandSwerveDrivetrain swerve, ShooterSubsystem shooter, WristSubsystem wrist, IntakeSubsystem intake){
+public class RedRightDouble extends SequentialCommandGroup{
+    public RedRightDouble(CommandSwerveDrivetrain swerve, ShooterSubsystem shooter, WristSubsystem wrist, IntakeSubsystem intake){
     addCommands(
         new PathPlannerAuto("RedRightMultiShoot"),
 

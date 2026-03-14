@@ -5,9 +5,15 @@
     "data": {
       "commands": [
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "BlueLeftShoot1"
+            "pathName": "RedMidToOutpost"
           }
         },
         {
@@ -19,25 +25,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "BlueLeftGetBall"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "BlueLeftShoot2"
+            "pathName": "RedMidFromOutpost"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Blue",
+  "folder": "Red",
   "choreoAuto": false
 }

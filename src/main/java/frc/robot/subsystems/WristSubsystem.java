@@ -3,8 +3,6 @@ package frc.robot.subsystems;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkFlexConfig;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -37,11 +35,11 @@ public class WristSubsystem extends SubsystemBase{
         pidController.setTolerance(0.1);
 
         maxLimit = 15;
-        minLimit = -15;
+        minLimit = -50;
     }
 
     public void rotateIn(){
-        position = position + 0.2;
+        position = position + 2;
         if(position > maxLimit){
             position = maxLimit;
         }
@@ -78,7 +76,7 @@ public class WristSubsystem extends SubsystemBase{
 
     @Override
     public void periodic(){
-          if(RobotContainer.getLeftTriggerValue() > 0.1){
+        if(RobotContainer.getLeftTriggerValue() > 0.1){
             rotateOut();
         }
         else{

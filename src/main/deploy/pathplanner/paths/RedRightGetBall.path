@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 14.414494964168583,
-        "y": 5.463076844803523
+        "x": 14.251884536938876,
+        "y": 5.667361511297652
       },
       "isLocked": true,
       "linkedName": "RedRightFire"
@@ -20,12 +20,12 @@
         "y": 5.707911111111112
       },
       "prevControl": {
-        "x": 13.749753352063399,
-        "y": 5.7190135042358525
+        "x": 13.747457232117934,
+        "y": 5.672345421570051
       },
       "nextControl": {
-        "x": 11.686366666666668,
-        "y": 5.627288888888888
+        "x": 13.129927542271616,
+        "y": 5.761099623835574
       },
       "isLocked": false,
       "linkedName": null
@@ -36,28 +36,28 @@
         "y": 5.949777777777779
       },
       "prevControl": {
-        "x": 10.567588053020012,
-        "y": 5.709087405953387
+        "x": 13.835747644503172,
+        "y": 5.493686256789118
       },
       "nextControl": {
-        "x": 10.084000000000001,
-        "y": 7.431211111111111
+        "x": 9.828431062825523,
+        "y": 6.041600340707375
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 9.096377777777777,
-        "y": 7.159111111111111
+        "x": 9.428944444444443,
+        "y": 7.219577777777777
       },
       "prevControl": {
-        "x": 9.479333333333335,
-        "y": 7.642844444444444
+        "x": 9.968717763934833,
+        "y": 7.206008569518294
       },
       "nextControl": {
-        "x": 8.689782865195003,
-        "y": 6.645517537322347
+        "x": 8.849727798869313,
+        "y": 7.234138540615387
       },
       "isLocked": false,
       "linkedName": null
@@ -68,22 +68,22 @@
         "y": 4.730366666666666
       },
       "prevControl": {
-        "x": 8.848915095115027,
-        "y": 5.706230644375685
+        "x": 8.590129013234483,
+        "y": 6.146161786081023
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "EndRedRightGetBall"
+      "linkedName": "RedRightGetBall"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 0.9333333333333378,
-      "rotationDegrees": -45.0
+      "rotationDegrees": -135.0
     },
     {
       "waypointRelativePos": 1.77,
-      "rotationDegrees": -45.0
+      "rotationDegrees": -135.0
     },
     {
       "waypointRelativePos": 2.9,
@@ -106,7 +106,7 @@
     "rotation": 90.0
   },
   "reversed": false,
-  "folder": "RedRightShoot",
+  "folder": "RedRight",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -147.3154137294033

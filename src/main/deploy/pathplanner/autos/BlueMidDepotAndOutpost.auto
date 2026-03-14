@@ -1,0 +1,73 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueMidToDepot1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueMidFromDepot1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueMidToDepot2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueMidFromDepot2"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueMidToOutpost"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueMidFromOutpost"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Blue",
+  "choreoAuto": false
+}

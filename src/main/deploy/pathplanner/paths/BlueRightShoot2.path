@@ -8,11 +8,11 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.539128125251021,
-        "y": 3.0843167671840903
+        "x": 6.622371688106074,
+        "y": 2.9740111719769744
       },
       "isLocked": false,
-      "linkedName": "EndBlueGetBallRight"
+      "linkedName": "BlueGetBallRight"
     },
     {
       "anchor": {
@@ -20,12 +20,12 @@
         "y": 2.533411111111111
       },
       "prevControl": {
-        "x": 6.4819222186903005,
-        "y": 2.6970095819409963
+        "x": 6.499530503718184,
+        "y": 2.7072489364862116
       },
       "nextControl": {
-        "x": 4.866005756104943,
-        "y": 2.466036553327053
+        "x": 4.638804138367302,
+        "y": 2.4289193114727863
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 2.3019999999999996
       },
       "prevControl": {
-        "x": 2.0550527998203076,
-        "y": 2.2790807608614023
+        "x": 2.056643318180611,
+        "y": 2.1240223238312876
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,7 +47,11 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.6323024054982839,
-      "rotationDegrees": 45.0
+      "rotationDegrees": 135.0
+    },
+    {
+      "waypointRelativePos": 1.5032119914346946,
+      "rotationDegrees": 135.0
     }
   ],
   "constraintZones": [],
@@ -66,7 +70,7 @@
     "rotation": 37.5
   },
   "reversed": false,
-  "folder": "BlueRightShoot",
+  "folder": "BlueRight",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -90.0

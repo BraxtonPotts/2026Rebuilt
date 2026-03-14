@@ -3,10 +3,12 @@
   "robotLength": 0.8763,
   "holonomicMode": true,
   "pathFolders": [
-    "BlueLeftShoot",
-    "BlueRightShoot",
-    "RedLeftShoot",
-    "RedRightShoot"
+    "BlueLeft",
+    "BlueMid",
+    "BlueRight",
+    "RedMid",
+    "RedLeft",
+    "RedRight"
   ],
   "autoFolders": [
     "Blue",

@@ -73,12 +73,16 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "EndBlueGetBallRight"
+      "linkedName": "BlueGetBallRight"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 1.0927835051546388,
+      "rotationDegrees": -45.0
+    },
+    {
+      "waypointRelativePos": 1.8986438258386824,
       "rotationDegrees": -45.0
     },
     {
@@ -102,7 +106,7 @@
     "rotation": -90.0
   },
   "reversed": false,
-  "folder": "BlueRightShoot",
+  "folder": "BlueRight",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 37.5
