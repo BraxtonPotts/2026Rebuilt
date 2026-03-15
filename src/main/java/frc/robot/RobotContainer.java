@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.commands.autos.BlueLeftDouble;
+//import frc.robot.commands.autos.BlueLeftDouble;
 import frc.robot.commands.lime.AlignToTag;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -23,6 +23,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.commands.RevandFeedCommand;
 
 public class RobotContainer {
 
@@ -49,12 +50,12 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final LimelightSubsystem limelight = new LimelightSubsystem(drivetrain);
     public final ShooterSubsystem shootersubsystem = new ShooterSubsystem();
-    public final WristSubsystem wrist = new WristSubsystem();
+    public final WristSubsystem wrist = new WristSubsystem(koperatorController::getLeftTriggerAxis);
     public final IntakeSubsystem intake = new IntakeSubsystem(koperatorController::getRightTriggerAxis);
     
         public RobotContainer() {
             autoChooser = new SendableChooser<Command>();
-            autoChooser.addOption("BlueLeft", new BlueLeftDouble(drivetrain, shootersubsystem, wrist, intake));
+            //autoChooser.addOption("BlueLeft", new BlueLeftDouble(drivetrain, shootersubsystem, wrist, intake));
             SmartDashboard.putData("Auto Chooser", autoChooser);
             configureBindings();
         }
@@ -75,6 +76,8 @@ public class RobotContainer {
         //koperatorController.y().onTrue(new SetWristCommand(wrist, -5));
         kdriverController.x().whileTrue(new AlignToTag(drivetrain, limelight, () -> -kdriverController.getLeftY(),  // forward/back
                 () -> -kdriverController.getLeftX()));
+        koperatorController.rightBumper().whileTrue(new RevandFeedCommand(shootersubsystem, limelight));
+        
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(

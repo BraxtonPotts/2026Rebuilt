@@ -19,7 +19,7 @@ public class BlueLeftDouble extends SequentialCommandGroup{
 
         Commands.runOnce(() -> wrist.setPosition(WristConstants.wristOutPostion), wrist),
         
-        Commands.runOnce(() -> shooter.speedUp(ShooterConstants.autoShooterSpeed, 1.39), shooter),
+        Commands.runOnce(() -> shooter.speedUp(ShooterConstants.autoShooterSpeed), shooter),
         new WaitCommand(1.39),
 
         Commands.runOnce(() -> shooter.fire(ShooterConstants.autoShooterSpeed), shooter),
@@ -32,7 +32,7 @@ public class BlueLeftDouble extends SequentialCommandGroup{
         Commands.runOnce(() -> intake.stop(), intake),
         new WaitCommand(2.5),
 
-        Commands.run(() -> shooter.speedUp(ShooterConstants.autoShooterSpeed, 1), shooter),
+        Commands.run(() -> shooter.speedUp(ShooterConstants.autoShooterSpeed), shooter),
         new WaitCommand(1),
 
         Commands.run(() -> shooter.fire(ShooterConstants.autoShooterSpeed), shooter),

@@ -29,7 +29,7 @@ public final class Constants {
     //INTAKE
     public static int intakeID = 17;
 
-    public static double intakeSpeed = 0.5;
+    public static double intakeSpeed = 4;
   }
     
   public static class WristConstants{

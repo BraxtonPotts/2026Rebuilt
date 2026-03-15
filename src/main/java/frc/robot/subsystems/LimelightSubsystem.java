@@ -30,7 +30,7 @@ public class LimelightSubsystem extends SubsystemBase {
     private static final double kRotD           = 0.001;
     private static final double kMaxRotOut      = 0.6;
     private static final double kAlignTolerance = 1.0;  // degrees
-    private static final double kMaxTagDistanceMeters = 4.0;
+    private static final double kMaxTagDistanceMeters = 10.0;
     private static final double kMaxSpinRateDegPerSec = 720.0;
 
 

@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
@@ -11,8 +10,6 @@ import java.util.function.DoubleSupplier;
 
 public class IntakeSubsystem extends SubsystemBase{
     private SparkFlex intake;
-    private double startTime;
-
     private DoubleSupplier rightTrigger;    
     private double intakeSpeed;
 
@@ -23,11 +20,11 @@ public class IntakeSubsystem extends SubsystemBase{
 }
 
     public void run (){
-        intake.set(intakeSpeed);
+        intake.setVoltage(intakeSpeed);
     }
 
     public void stop(){
-        intake.set(0);
+        intake.setVoltage(0);
     }
 
     @Override
