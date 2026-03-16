@@ -16,23 +16,23 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase{
-    private static final double kP = 0.0001;
+    private static final double kP = 0.001;
     private static final double kI = 0.0;
     private static final double kD = 0.0;
     private static final double kF = 0.00017; // feedforward — most
 
-    private static final double kRPMTolerance = 100; // within 100 RPM = ready to shoot
-    private static final double kIdleRPM = 1500; //when no target present
+    private static final double kRPMTolerance = 50; // within 100 RPM = ready to shoot
+    private static final double kIdleRPM = 2500; //when no target present
 
     //Tuning
-    private static final double Pt1Distance = 1.0; //meters
-    private static final double Pt1RPM = 2000; //RPM
+    private static final double Pt1Distance = 3.5; //meters
+    private static final double Pt1RPM = 4300; //RPM
 
-    private static final double Pt2Distance = 3.0; //meters
-    private static final double Pt2RPM = 4000; //RPM
+    private static final double Pt2Distance = 6; //meters
+    private static final double Pt2RPM = 5000; //RPM
 
     //Clamps
-    private static final double minRPM = 1500;
+    private static final double minRPM = 3000;
     private static final double maxRPM = 5000;
 
     private static final double kSlope = (Pt2RPM - Pt1RPM) / (Pt2Distance - Pt1Distance);
@@ -62,6 +62,7 @@ public class ShooterSubsystem extends SubsystemBase{
         rightShoot = new SparkFlex(ShooterConstants.outRightID, MotorType.kBrushless);
 
         feed = new SparkFlex(ShooterConstants.feedID, MotorType.kBrushless);
+        SmartDashboard.putNumber("Shooter/TuningRPM", 0.0);
         
 
         // Left motor
@@ -138,9 +139,9 @@ public class ShooterSubsystem extends SubsystemBase{
             && Math.abs(rightEncoder.getVelocity() - targetRPM) < kRPMTolerance;
     }
 
-    public double  getTopRPM()        { return leftEncoder.getVelocity();    }
-    public double  getBottomRPM()     { return rightEncoder.getVelocity(); }
-    public double  getAvgRPM()        { return (getTopRPM() + getBottomRPM()) / 2.0; }
+    public double  getLeftRPM()        { return leftEncoder.getVelocity();    }
+    public double  getRightRPM()     { return rightEncoder.getVelocity(); }
+    public double  getAvgRPM()        { return (getLeftRPM() + getRightRPM()) / 2.0; }
     public double  getTargetRPM()     { return targetRPM;                   }
     public double  getCalculatedRPM() { return calculatedRPM;               }
     public double  getSnapshotRPM()   { return snapshotRPM;                 }
@@ -159,7 +160,8 @@ public class ShooterSubsystem extends SubsystemBase{
         if (tuningMode) {
             double tuningTarget = SmartDashboard.getNumber("Shooter/TuningRPM", 0.0);
             setRPM(tuningTarget);
-            SmartDashboard.putNumber("Shooter/TuningRPM", tuningTarget);
+
+            if(atTargetRPM()) runFeed(); else stopFeed();
         }
 
         // ── Shot detection — capture RPM before ball causes dip ───────────
@@ -171,14 +173,11 @@ public class ShooterSubsystem extends SubsystemBase{
         prevAvgRPM = avgRPM;
 
         // ── Telemetry ─────────────────────────────────────────────────────
-        SmartDashboard.putNumber ("Shooter/TopRPM",        getTopRPM());
-        SmartDashboard.putNumber ("Shooter/BottomRPM",     getBottomRPM());
+        SmartDashboard.putNumber ("Shooter/RightRPM",        getRightRPM());
+        SmartDashboard.putNumber ("Shooter/LeftRPM",     getLeftRPM());
         SmartDashboard.putNumber ("Shooter/AvgRPM",        avgRPM);
         SmartDashboard.putNumber ("Shooter/TargetRPM",     targetRPM);
         SmartDashboard.putNumber ("Shooter/CalculatedRPM", calculatedRPM);
-        SmartDashboard.putNumber ("Shooter/SnapshotRPM",   snapshotRPM);
-        SmartDashboard.putNumber ("Shooter/TopError",      Math.abs(getTopRPM()    - targetRPM));
-        SmartDashboard.putNumber ("Shooter/BottomError",   Math.abs(getBottomRPM() - targetRPM));
         SmartDashboard.putBoolean("Shooter/AtTargetRPM",   atTargetRPM());
         SmartDashboard.putBoolean("Shooter/ShotDetected",  shotDetected);
         SmartDashboard.putBoolean("Shooter/TuningMode",    tuningMode);

@@ -33,6 +33,8 @@ public class LimelightSubsystem extends SubsystemBase {
     private static final double kMaxTagDistanceMeters = 10.0;
     private static final double kMaxSpinRateDegPerSec = 720.0;
 
+    private static final int kTargetLostThreshold = 5;
+
 
     // =====================================================
     // Subsystems
@@ -50,8 +52,11 @@ public class LimelightSubsystem extends SubsystemBase {
     // =====================================================
     private double  rotationOutput   = 0.0;
     private double  distanceToTarget = 0.0;
+    private double  lastKnownDistance = 0.0;
     private boolean hasTarget        = false;
     private int     currentTagID     = -1;
+    private RawFiducial bestTag      = null;
+    private int     targetLostCount = 0;
 
     // =====================================================
     // Constructor
@@ -135,18 +140,32 @@ public class LimelightSubsystem extends SubsystemBase {
     // 3. Track target tag — compute rotation PID + distance
     // =====================================================
     private void updateTargetTracking() {
-        rotationOutput   = 0.0;
-        distanceToTarget = 0.0;
-        hasTarget        = false;
-        currentTagID     = -1;
-        
-        int goalTagID = DriverStation.getAlliance().map(a -> a == DriverStation.Alliance.Red ? 10 : 26).orElse(-1); //change these to hub tag IDs
-
         RawFiducial[] fiducials = LimelightHelpers.getRawFiducials(kLimelightName);
-        if (fiducials == null || fiducials.length == 0) return;
 
-        // Prefer goal tag, fall back to closest tag
-        RawFiducial bestTag = null;
+        if (fiducials == null || fiducials.length == 0) {
+            targetLostCount++;
+
+            if (targetLostCount >= kTargetLostThreshold) {
+                // Been a few loops since we've seen a tag — reset distance to avoid stale readings
+                rotationOutput   = 0.0;
+                distanceToTarget = 0.0;
+                hasTarget        = false;
+                currentTagID     = -1;
+                bestTag          = null;
+             
+            }
+            return;
+        }
+
+        targetLostCount = 0; // reset target lost count since we see something
+
+        int goalTagID = DriverStation.getAlliance()
+            .map(a -> a == DriverStation.Alliance.Red ? 10 : 26)
+            .orElse(-1); //change these to hub tag IDs
+
+
+
+        bestTag = null;
         for (RawFiducial tag : fiducials) {
             if (tag.id == goalTagID) {
                 bestTag = tag;
@@ -157,7 +176,11 @@ public class LimelightSubsystem extends SubsystemBase {
 
         hasTarget    = true;
         currentTagID = bestTag.id;
+        distanceToTarget = bestTag.distToCamera;
 
+        if (distanceToTarget > 0) {
+            lastKnownDistance = distanceToTarget;
+        }
         // tx from RawFiducial is txnc (principal pixel — most accurate)
         double tx  = bestTag.txnc;
         double raw = rotPID.calculate(tx, 0.0);
@@ -165,7 +188,6 @@ public class LimelightSubsystem extends SubsystemBase {
 
         // Distance from camera geometry using distToCamera directly
         // LimelightHelpers gives us this for free — no ty math needed!
-        distanceToTarget = bestTag.distToCamera;
     }
 
     // =====================================================
@@ -176,6 +198,7 @@ public class LimelightSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("Limelight/Aligned",        isAligned());
         SmartDashboard.putNumber ("Limelight/RotationOutput", rotationOutput);
         SmartDashboard.putNumber ("Limelight/DistanceMeters", distanceToTarget);
+        SmartDashboard.putNumber ("Limelight/LastKnownDistance", lastKnownDistance);
         SmartDashboard.putNumber ("Limelight/CurrentTagID",   currentTagID);
         SmartDashboard.putNumber ("Limelight/RobotYaw",
             drivetrain.getState().Pose.getRotation().getDegrees());
@@ -192,6 +215,8 @@ public class LimelightSubsystem extends SubsystemBase {
 
     /** Distance to tracked tag in meters */
     public double getDistanceToTarget() { return distanceToTarget; }
+
+    private double getLastKnownDistance() { return lastKnownDistance; }
 
     /** True when centered on tag within tolerance */
     public boolean isAligned() { return hasTarget && rotPID.atSetpoint(); }

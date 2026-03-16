@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
@@ -73,11 +74,15 @@ public class RobotContainer {
 
     private void configureBindings() {
 
-        //koperatorController.y().onTrue(new SetWristCommand(wrist, -5));
         kdriverController.x().whileTrue(new AlignToTag(drivetrain, limelight, () -> -kdriverController.getLeftY(),  // forward/back
                 () -> -kdriverController.getLeftX()));
         koperatorController.rightBumper().whileTrue(new RevandFeedCommand(shootersubsystem, limelight));
-        
+        koperatorController.a().whileTrue(Commands.startEnd(
+            () -> shootersubsystem.enableTuningMode(),
+             () -> {shootersubsystem.disableTuningMode();
+             shootersubsystem.stop();}
+             ));
+
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(

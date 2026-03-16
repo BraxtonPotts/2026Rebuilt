@@ -9,7 +9,7 @@ public class RevandFeedCommand extends Command {
     private final ShooterSubsystem   shooter;
     private final LimelightSubsystem limelight;
 
-    private static final double kIdleRPM = 1500; // spins at this when no tag visible
+    private static final double kIdleRPM = 2500; // spins at this when no tag visible
 
     public RevandFeedCommand(ShooterSubsystem shooter, LimelightSubsystem limelight) {
         this.shooter  = shooter;
@@ -20,11 +20,11 @@ public class RevandFeedCommand extends Command {
 
     @Override
     public void execute() {
-        if (limelight.hasTarget()) {
-            // Plug limelight distance straight into RPM equation
-            shooter.setRPMFromDistance(limelight.getDistanceToTarget());
+        double distance = limelight.getDistanceToTarget();
+        
+        if (distance > 0) {
+            shooter.setRPMFromDistance(distance);
         } else {
-            // No tag — keep wheels warm at idle
             shooter.setRPM(kIdleRPM);
         }
 
