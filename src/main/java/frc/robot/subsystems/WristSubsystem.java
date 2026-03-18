@@ -84,11 +84,15 @@ public class WristSubsystem extends SubsystemBase{
         if(leftTrigger.getAsDouble() > 0.1){
             setPosition(WristConstants.wristOutPostion);
         }
+        /*
         else if(WristConstants.wristOutPostion - 0.5 <= position && WristConstants.wristOutPostion + 0.5 >= position){
             stop();
         }
+            */
         else{
-        holdPosition();
+            stop();
         }
+
+        holdPosition();
     }
 }

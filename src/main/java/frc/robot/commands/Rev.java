@@ -4,14 +4,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class RevandFeedCommand extends Command {
+public class Rev extends Command {
 
     private final ShooterSubsystem   shooter;
     private final LimelightSubsystem limelight;
 
     private static final double kIdleRPM = 2500; // spins at this when no tag visible
 
-    public RevandFeedCommand(ShooterSubsystem shooter, LimelightSubsystem limelight) {
+    public Rev(ShooterSubsystem shooter, LimelightSubsystem limelight) {
         this.shooter  = shooter;
         this.limelight = limelight;
         
@@ -28,19 +28,13 @@ public class RevandFeedCommand extends Command {
             shooter.setRPM(kIdleRPM);
         }
 
-        if (shooter.atTargetRPM()) {
-            shooter.runFeed();
-        } else {
-            shooter.stopFeed();
-        }
-    }
+       }
 
     @Override
     public boolean isFinished() { return false; } // runs until button released
 
     @Override
     public void end(boolean interrupted) {
-        shooter.stopFeed();
         shooter.stop();
     }
 }
