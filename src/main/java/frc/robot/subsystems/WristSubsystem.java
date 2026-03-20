@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import java.util.function.DoubleSupplier;
-
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -27,9 +25,9 @@ public class WristSubsystem extends SubsystemBase{
     private double maxLimit;
     private double minLimit;
 
-    private DoubleSupplier leftTrigger;
+    private boolean isHoldingPosition;
 
-    public WristSubsystem(DoubleSupplier leftTrigger){
+    public WristSubsystem(){
         wristMotor = new SparkFlex(WristConstants.wristID, MotorType.kBrushless);
 
         wristEncoder = wristMotor.getEncoder();
@@ -39,10 +37,17 @@ public class WristSubsystem extends SubsystemBase{
 
         maxLimit = 0;
         minLimit = -20;
-
-        this.leftTrigger = leftTrigger;
     }
 
+    public void isHoldingPosition(){
+        
+        if(isHoldingPosition){
+            isHoldingPosition = false;
+        }
+        else{
+            isHoldingPosition = true;
+        }
+    }
     public void rotateIn(){
         position = position + .5;
         if(position > maxLimit){
@@ -81,18 +86,8 @@ public class WristSubsystem extends SubsystemBase{
 
     @Override
     public void periodic(){
-        if(leftTrigger.getAsDouble() > 0.1){
-            setPosition(WristConstants.wristOutPostion);
+        if(isHoldingPosition){
+            holdPosition();
         }
-        /*
-        else if(WristConstants.wristOutPostion - 0.5 <= position && WristConstants.wristOutPostion + 0.5 >= position){
-            stop();
-        }
-            */
-        else{
-            stop();
-        }
-
-        holdPosition();
     }
 }

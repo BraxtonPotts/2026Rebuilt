@@ -21,8 +21,6 @@ public final class Constants {
 
     public static double shootTime = 3;
     public static double shootSpeed = 0.7;
-
-    public static double autoShooterSpeed = 0.5;
   }
  
   public static class IntakeConstants{

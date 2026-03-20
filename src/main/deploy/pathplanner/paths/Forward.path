@@ -3,45 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 15.878722222222223,
-        "y": 7.380822222222222
+        "x": 3.5467141162514837,
+        "y": 6.547271648873073
       },
       "prevControl": null,
       "nextControl": {
-        "x": 15.784262325180364,
-        "y": 7.149354453729844
-      },
-      "isLocked": false,
-      "linkedName": "RedOutpost"
-    },
-    {
-      "anchor": {
-        "x": 14.646324663162947,
-        "y": 5.131254602432861
-      },
-      "prevControl": {
-        "x": 14.677844858185471,
-        "y": 5.387291464153186
-      },
-      "nextControl": {
-        "x": 14.600272525639241,
-        "y": 4.757175547444254
+        "x": 2.5467141162514846,
+        "y": 6.547271648873073
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 14.669388888888891,
-        "y": 3.934222222222221
+        "x": 2.2878884934756827,
+        "y": 6.547271648873073
       },
       "prevControl": {
-        "x": 14.672697089716628,
-        "y": 4.237890406370704
+        "x": 3.2878884934756827,
+        "y": 6.547271648873073
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RedMidFire"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -58,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "RedMid",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

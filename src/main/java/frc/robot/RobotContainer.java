@@ -24,9 +24,20 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.Constants.WristConstants;
 import frc.robot.commands.Feed;
+import frc.robot.commands.Feeder;
 import frc.robot.commands.Rev;
 import frc.robot.commands.Reverse;
+import frc.robot.commands.autos.Forward;
+import frc.robot.commands.autos.blue.BlueLeftDouble;
+import frc.robot.commands.autos.blue.BlueMidDepot;
+import frc.robot.commands.autos.blue.BlueMidDepotAndOutpost;
+import frc.robot.commands.autos.blue.BlueRightDouble;
+import frc.robot.commands.autos.red.RedLeftDouble;
+import frc.robot.commands.autos.red.RedMidDepot;
+import frc.robot.commands.autos.red.RedMidDepotAndOutpost;
+import frc.robot.commands.autos.red.RedRightDouble;
 
 public class RobotContainer {
 
@@ -53,13 +64,25 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final LimelightSubsystem limelight = new LimelightSubsystem(drivetrain);
     public final ShooterSubsystem shootersubsystem = new ShooterSubsystem();
-    public final WristSubsystem wrist = new WristSubsystem(koperatorController::getLeftTriggerAxis);
-    public final IntakeSubsystem intake = new IntakeSubsystem(koperatorController::getRightTriggerAxis);
+    public final WristSubsystem wrist = new WristSubsystem();
+    public final IntakeSubsystem intake = new IntakeSubsystem(koperatorController::getRightTriggerAxis, koperatorController::getLeftTriggerAxis);
     
         public RobotContainer() {
             autoChooser = new SendableChooser<Command>();
-            //autoChooser.addOption("BlueLeft", new BlueLeftDouble(drivetrain, shootersubsystem, wrist, intake));
+            autoChooser.addOption("BlueLeft", new BlueLeftDouble(drivetrain, shootersubsystem, wrist, intake, limelight));
+            autoChooser.addOption("BlueRight", new BlueRightDouble(drivetrain, shootersubsystem, wrist, intake, limelight));
+            autoChooser.addOption("BlueDepot", new BlueMidDepot(drivetrain, shootersubsystem, wrist, intake, limelight));
+            autoChooser.addOption("BlueDepotAndOutpost", new BlueMidDepotAndOutpost(drivetrain, shootersubsystem, wrist, intake, limelight));
+            
+            autoChooser.addOption("RedLeft", new RedLeftDouble(drivetrain, shootersubsystem, wrist, intake, limelight));
+            autoChooser.addOption("RedRight", new RedRightDouble(drivetrain, shootersubsystem, wrist, intake, limelight));
+            autoChooser.addOption("RedDepot", new RedMidDepot(drivetrain, shootersubsystem, wrist, intake, limelight));
+            autoChooser.addOption("RedDepotAndOutpost", new RedMidDepotAndOutpost(drivetrain, shootersubsystem, wrist, intake, limelight));
+            
+            autoChooser.setDefaultOption("Forward", new Forward(drivetrain, wrist));
+
             SmartDashboard.putData("Auto Chooser", autoChooser);
+            
             configureBindings();
         }
         
@@ -75,20 +98,30 @@ public class RobotContainer {
         
 
     private void configureBindings() {
-
+        
+        // ALIGN
         kdriverController.x().whileTrue(new AlignToTag(drivetrain, limelight, () -> -kdriverController.getLeftY(),  // forward/back
                 () -> -kdriverController.getLeftX()));
+
+        // SHOOTER
         koperatorController.rightBumper().whileTrue(new Rev(shootersubsystem, limelight));
+
+        koperatorController.leftBumper().whileTrue(new Feed(shootersubsystem));
+
+        koperatorController.b().whileTrue(new Reverse(shootersubsystem));
+
         koperatorController.a().whileTrue(Commands.startEnd(
             () -> shootersubsystem.enableTuningMode(),
              () -> {shootersubsystem.disableTuningMode();
              shootersubsystem.stop();}
              ));
 
-        koperatorController.leftBumper().whileTrue(new Feed(shootersubsystem)
-        );
-        koperatorController.b().whileTrue(new Reverse(shootersubsystem));
-
+        koperatorController.y().whileTrue(new Feeder(shootersubsystem));
+        // WRIST
+        koperatorController.povDown().whileTrue(Commands.run(() -> wrist.rotateIn(), wrist));
+        koperatorController.povUp().whileTrue(Commands.run(() -> wrist.rotateOut(), wrist));
+        koperatorController.povLeft().onTrue(Commands.runOnce(() -> wrist.isHoldingPosition(), wrist));
+        koperatorController.povRight().onTrue(Commands.runOnce(() -> wrist.setPosition(WristConstants.wristOutPostion)));
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(

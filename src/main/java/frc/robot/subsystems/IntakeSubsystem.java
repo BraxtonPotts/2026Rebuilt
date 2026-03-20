@@ -13,14 +13,20 @@ public class IntakeSubsystem extends SubsystemBase{
     private DoubleSupplier rightTrigger;    
     private double intakeSpeed;
 
-    public IntakeSubsystem(DoubleSupplier rightTrigger) {
+    private DoubleSupplier leftTrigger;
+
+    public IntakeSubsystem(DoubleSupplier rightTrigger, DoubleSupplier leftTrigger){ 
     intake = new SparkFlex(IntakeConstants.intakeID, MotorType.kBrushless);
     intakeSpeed = IntakeConstants.intakeSpeed;
     this.rightTrigger = rightTrigger;
+    this.leftTrigger = leftTrigger;
 }
 
     public void run (){
         intake.setVoltage(intakeSpeed);
+    }
+    public void reverseRun(){
+        intake.setVoltage(-intakeSpeed);
     }
 
     public void stop(){
@@ -32,6 +38,9 @@ public class IntakeSubsystem extends SubsystemBase{
         
         if(rightTrigger.getAsDouble() > 0.1){
             run();
+        }
+        else if(leftTrigger.getAsDouble() > -0.1){
+            reverseRun();
         }
         else{
             stop();

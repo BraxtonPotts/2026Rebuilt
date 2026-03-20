@@ -13,19 +13,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0
+            "waitTime": 3.0
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "BlueLeftGetBall"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0
           }
         },
         {
